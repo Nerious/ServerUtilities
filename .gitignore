@@ -86,3 +86,13 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Rider folder
+.idea/
+
+# Visual Studio Code folder
+.vscode/
+
+# Files in commands that start with a dot
+/commands/**/.*
+.DS_Store
