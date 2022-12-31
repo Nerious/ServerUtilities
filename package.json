@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Nerious/ServerUtilities#readme",
   "dependencies": {
-    "discord.js": "^14.7.1"
+    "discord.js": "^14.7.1",
+    "numberformatter": "github:IvoDeK/NumberFormatter"
   }
 }
