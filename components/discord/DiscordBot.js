@@ -50,7 +50,10 @@ export class DiscordBot {
         });
 
         new Events();
-        new SlashCommands();
         new PermissionChecker();
+    }
+
+    createSlashCommandsClass() {
+        new SlashCommands();
     }
 }

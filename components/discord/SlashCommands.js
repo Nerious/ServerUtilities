@@ -15,7 +15,7 @@ export class SlashCommands {
     }
 
     async GetAllCommands() {
-        this.localSlashCommands = bot.client.commands;
+        this.localSlashCommands = bot.client.application.commands;
         return this.commands = await this.scanner.ScanAll();
     }
 

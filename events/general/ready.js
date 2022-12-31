@@ -1,5 +1,6 @@
 export class event {
     async run() {
+        bot.createSlashCommandsClass();
         await SlashCommands.RegisterAllCommands();
     }
 }
