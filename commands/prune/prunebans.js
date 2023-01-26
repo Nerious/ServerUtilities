@@ -1,15 +1,18 @@
 import { toFormatMilliseconds } from "numberformatter";
 
 export class command {
-    cache = [];
+    constructor() {
+        bot.cache.set("prunebans", [])
+    }
+
     async run(interaction) {
-        if (interaction.guildId in this.cache) return interaction.editReply("Already running...");
+        if (bot.cache.get("prunebans").find(guild => guild === interaction.guildId)) return interaction.editReply("Already running...");
 
         let bans = await interaction.guild.bans.fetch();
 
         if (bans.size === 0) return interaction.editReply("No bans found.")
 
-        this.cache.push(interaction.guildId);
+        bot.cache.get("prunebans").push(interaction.guildId);
 
         const loopAmount = Math.floor(bans.size / 5);
 
@@ -31,7 +34,8 @@ export class command {
                     index = 0;
                     bans = await interaction.guild.bans.fetch();
                     if (bans.size === 0) {
-                        return interaction.editReply("All bans have been cleared");
+                        await interaction.editReply("All bans have been cleared");
+                        return bot.cache.get("prunebans").splice(bot.cache.get("prunebans").indexOf(interaction.guildId), 1);
                     }
                     await toLoop();
                 }
