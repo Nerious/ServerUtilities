@@ -8,6 +8,8 @@ export class DiscordBot {
     client
     ownerID
 
+    cache = new Map();
+
     /**
      * Create the Discord bot.
      * @param {string} token Set the token to create the bot with.
