@@ -60,7 +60,8 @@ export const info = {
         PermissionBits.ADMINISTRATOR
     ],
     botPermissions: [
-        PermissionBits.BAN_MEMBERS
+        PermissionBits.BAN_MEMBERS,
+        PermissionBits.SEND_MESSAGES
     ],
     options: [{
         type: CommandOptionTypes.BOOLEAN,
