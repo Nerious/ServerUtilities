@@ -8,7 +8,7 @@ export class SlashCommands {
     localSlashCommands
 
     constructor() {
-        this.scanner = new Scanner(process.cwd()+"/commands/", "SlashCommand");
+        this.scanner = new Scanner(process.cwd() + "/commands/", "SlashCommand");
         //End temp
         this.GetAllCommands().then();
         global.SlashCommands = this;
@@ -31,8 +31,8 @@ export class SlashCommands {
 
     async StillExists(currentCommands) {
         const commandFiles = Array.from(this.commands.values()).flat();
-        currentCommands.forEach((command)=> {
-            if (!commandFiles.find(cmd => cmd === command.name+".js")) this.#UnregisterOnDiscord(command);
+        currentCommands.forEach((command) => {
+            if (!commandFiles.find(cmd => cmd === command.name + ".js")) this.#UnregisterOnDiscord(command);
         })
     }
 
@@ -45,7 +45,11 @@ export class SlashCommands {
         checker: if (exists) {
             exists.options = JSON.parse(JSON.stringify({cmdsinfo: exists.options}))["cmdsinfo"];
             let optionsChanged;
-            try { deepStrictEqual(exists.options.length > 0? exists.options:undefined, info.options) } catch (err) { optionsChanged = true }
+            try {
+                deepStrictEqual(exists.options.length > 0 ? exists.options : undefined, info.options);
+            } catch (err) {
+                optionsChanged = true;
+            }
             if (exists.description !== info.description || optionsChanged || exists.defaultMemberPermissions?.missing(info.defaultMemberPermissions)?.length > 0) break checker;
             exists.handler = tempCommand;
             return exists.info = info;
@@ -58,13 +62,10 @@ export class SlashCommands {
     }
 
     async #RegisterOnDiscord(info) {
-        return this.localSlashCommands.create({
-            type: CommandTypes.CHAT_INPUT,
-            name: info.name.toLowerCase(),
-            description: info.description,
-            options: info.options,
-            defaultMemberPermissions: info.defaultMemberPermissions,
-        });
+        info.type = CommandTypes.CHAT_INPUT;
+        if (info.defaultMemberPermissions?.length === 0) info.defaultMemberPermissions = null;
+
+        return this.localSlashCommands.create(info);
     }
 
     async #UnregisterOnDiscord(command) {
