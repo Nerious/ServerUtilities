@@ -22,4 +22,25 @@ export class PermissionChecker {
     ComparePosition(member, targetMember) {
         return member.roles.highest.position <= targetMember.roles.highest.position;
     }
+
+    /**
+     *
+     * @param {Object} member Member to check the permissions for.
+     * @param {Object} channelID The channel to check for
+     * @param {Object|Number} permissions All the permissions to check
+     * @returns {{channel: Object, missingPermissions: *[]}}
+     * @constructor
+     */
+    CheckChannelAndPermissions(member, channelID, permissions) {
+        const data = {
+            channel: undefined,
+            missingPermissions: undefined
+        }
+
+        data.channel = member.guild.channels.resolve(channelID)
+
+        if (data.channel) data.missingPermissions = this.CheckMemberPermission(member, data.channel, permissions);
+
+        return data;
+    }
 }
